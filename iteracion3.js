@@ -1,0 +1,76 @@
+// **Iteración #3: Mix Fors**
+
+// Dado el siguiente javascript usa forof y forin para saber cuantas veces ha sido cada sonido agregado por los usuarios a favorito.
+// Para ello recorre la lista de usuarios y usa forin para recoger el nombre de los sonidos que el usuario tenga como favoritos.
+// Una vez accedas a ellos piensa en la mejor forma de hacer un conteo de cada vez que ese sonido se repita como favorito en cada usuario.
+
+// Este ejercicio es un poco complicado con los conocimientos actuales pero...a la vez un buen reto y oportunidad para comprender que hay muchas formas de hacer las cosas en javascript.
+
+const users = [
+	{
+		name: "Manolo el del bombo",
+		favoritesSounds: {
+			waves: { format: "mp3", volume: 50 },
+			rain: { format: "ogg", volume: 60 },
+			firecamp: { format: "mp3", volume: 80 },
+		},
+	},
+	{
+		name: "Mortadelo",
+		favoritesSounds: {
+			waves: { format: "mp3", volume: 30 },
+			shower: { format: "ogg", volume: 55 },
+			train: { format: "mp3", volume: 60 },
+		},
+	},
+	{
+		name: "Super Lopez",
+		favoritesSounds: {
+			shower: { format: "mp3", volume: 50 },
+			train: { format: "ogg", volume: 60 },
+			firecamp: { format: "mp3", volume: 80 },
+		},
+	},
+	{
+		name: "El culebra",
+		favoritesSounds: {
+			waves: { format: "mp3", volume: 67 },
+			wind: { format: "ogg", volume: 35 },
+			firecamp: { format: "mp3", volume: 60 },
+		},
+	},
+];
+
+let arraySounds = [];
+let arraySoundsNotDuplicated = [];
+let finalArray = [];
+let contador = null;
+
+function counterSounds(param) {
+	for (let item of param) {
+		// recorro los objetos
+
+		for (let key in item.favoritesSounds) {
+			// extraigo todos los sonidos
+			arraySounds.push(key); // Creo un array con todos los sonidos aunque estén duplicados
+			if (!arraySoundsNotDuplicated.includes(key)) {
+				arraySoundsNotDuplicated.push(key);
+				// envío al array sin duplicados
+			}
+		}
+	}
+	for (let item1 of arraySoundsNotDuplicated) {
+		// recorro el array sin duplicados
+		for (let item2 of arraySounds) {
+			// recorro el array con duplicados
+			if (item1 === item2) {
+				contador += 1;
+			}
+		}
+		finalArray.push(item1 + " " + contador); // envío al array final el sonido y las veces que se duplica
+		contador = 0;
+	}
+	return finalArray;
+}
+
+console.log(counterSounds(users));
